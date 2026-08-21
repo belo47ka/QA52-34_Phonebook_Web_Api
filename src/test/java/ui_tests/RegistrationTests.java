@@ -1,5 +1,6 @@
 package ui_tests;
 
+import data_providers.UserDataProvider;
 import dto.UserLombok;
 import manager.AppManager;
 import org.testng.Assert;
@@ -17,7 +18,7 @@ public class RegistrationTests extends AppManager {
 
     @BeforeMethod
     public void goToRegistrationLoginPage() {
-        new HomePage(getDriver()).clickBtnLogin();
+        new HomePage(getDriver()).clickLinkLogin();
         loginPage = new LoginPage(getDriver());
     }
 
@@ -50,6 +51,37 @@ public class RegistrationTests extends AppManager {
         Assert.assertTrue(loginPage.closeAlert()
                 .contains("Wrong email or password format"));
     }
+
+    @Test
+    public void registrationNegativeEmptyEmailFieldsTest(){
+        UserLombok user = positiveUser();
+        user.setUsername("");
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnRegistration();
+        Assert.assertTrue(loginPage.closeAlert()
+                .contains("Wrong email or password format"));
+    }
+
+    @Test
+    public void registrationNegativeEmptyPasswordFieldsTest(){
+        UserLombok user = positiveUser();
+        user.setPassword("");
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnRegistration();
+        Assert.assertTrue(loginPage.closeAlert()
+                .contains("Wrong email or password format"));
+    }
+
+    @Test(dataProvider = "dataProviderWrongPasswordOrEmail",
+            dataProviderClass = UserDataProvider.class)
+    public void registrationNegativeWrongPasswordFieldsTest(UserLombok user){
+
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnRegistration();
+        Assert.assertTrue(loginPage.closeAlert()
+                .contains("Wrong email or password format"));
+    }
+
 
 
 
