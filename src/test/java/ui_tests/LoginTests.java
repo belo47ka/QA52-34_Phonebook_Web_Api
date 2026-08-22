@@ -1,5 +1,6 @@
 package ui_tests;
 
+import data_providers.UserDataProvider;
 import dto.UserLombok;
 import manager.AppManager;
 import org.testng.Assert;
@@ -18,6 +19,16 @@ public class LoginTests extends AppManager {
     public void goToRegesrationLoginPage(){
         new HomePage(getDriver()).clickLinkLogin();
         loginPage=new LoginPage(getDriver());
+    }
+
+    @Test(dataProvider = "dataProviderWrongPasswordOrEmail",
+            dataProviderClass = UserDataProvider.class)
+    public void loginNegativeWrongPasswordFieldsTest(UserLombok user){
+
+        loginPage.typeLoginRegistrationForm(user);
+        loginPage.clickBtnLogin();
+        Assert.assertTrue(loginPage.closeAlert()
+                .contains("Wrong email or password"));
     }
     @Test
     public void loginPositiveTest(){
