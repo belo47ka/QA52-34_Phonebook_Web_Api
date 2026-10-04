@@ -91,7 +91,7 @@ public class RegistrationLoginApiTests implements BaseApi {
     public void loginApiWrongNegativeTEst(){
         UserLombok user = UserLombok.builder()
                 .username(getProperty("base.properties","email"))
-                .password("qwerfm12!")
+                .password("qwerfm12!1")
                 .build();
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
