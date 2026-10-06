@@ -70,7 +70,7 @@ public class AddNewContactApiTests implements BaseApi, ILogin {
         softAssert.assertEquals(response.code(), 200, "validate status code");
         softAssert.assertTrue(responseMessageDto.getMessage().contains("Contact was added!"), "validate message");
         softAssert.assertAll();
-        System.out.println();
+
     }
 
 }
