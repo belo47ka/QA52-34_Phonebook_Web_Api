@@ -44,18 +44,18 @@ public interface ICreateContact extends BaseApi{
         Request request2 = new Request.Builder()
                 .url(BASE_URL+ADD_CONTACT)
                 .addHeader(AUTH,tokenDto.getToken())
-                .post(requestBody)
+                .post(requestBody2)
                 .build();
         Response response2;
         try {
-            response2 = OK_HTTP_CLIENT.newCall(request).execute();
+            response2 = OK_HTTP_CLIENT.newCall(request2).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         ResponseMessageDto responseMessageDto;
         try {
             responseMessageDto = GSON.fromJson(response2.body().string(), ResponseMessageDto.class);
-            String idContact = responseMessageDto.getMessage().split("ID")[1];
+            String idContact = responseMessageDto.getMessage().split("ID: ")[1];
             return idContact;
         } catch (IOException e) {
             throw new RuntimeException(e);

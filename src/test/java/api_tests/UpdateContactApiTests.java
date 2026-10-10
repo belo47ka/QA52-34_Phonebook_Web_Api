@@ -18,17 +18,18 @@ import java.io.IOException;
 import static utils.ContactFactory.*;
 
 public class UpdateContactApiTests implements BaseApi, ICreateContact, ILogin {
-    ContactDto contactDto;
+    String idContact;
     TokenDto tokenDto;
     @BeforeClass
     public void login(){
         tokenDto = loginGetToken();
-        contactDto = createContact();
+        idContact = createContact();
+        System.out.println(idContact);
     }
     @Test
     public void updateContactPositiveApiTests(){
         ContactDto contact = positiveContact();
-        contact.setId(createContact().getId());
+        contact.setId(idContact);
         RequestBody requestBody = RequestBody.create(GSON.toJson(contact),JSON);
         Request request = new Request.Builder()
                 .url(BASE_URL + PUT_CONTACT)
